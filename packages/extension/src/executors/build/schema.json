@@ -1,9 +1,36 @@
 {
 	"$schema": "http://json-schema.org/schema",
 	"cli": "nx",
-	"title": "Build executor",
+	"title": "Grammar executor",
 	"description": "",
 	"type": "object",
-	"properties": {},
-	"required": []
+	"properties": {
+		"assets": {
+			"type": "array",
+			"items": {
+				"type": "string"
+			},
+			"description": "File paths to be copied from the project root to the output path."
+		},
+		"additionalTargets": {
+			"type": "array",
+			"items": {
+				"type": "string"
+			},
+			"description": "Additional targets to run after the build is completed."
+		},
+		"entryPoint": {
+			"type": "string",
+			"description": "The entry-point for the `esbuild` bundler."
+		},
+		"outputPath": {
+			"type": "string",
+			"description": "Destination folder for the build output."
+		},
+		"outputFile": {
+			"type": "string",
+			"description": "Path to the bundled output file, relative to `outputPath`. This should match the `main` field of your `package.json`."
+		}
+	},
+	"required": ["entryPoint", "outputPath", "outputFile"]
 }
