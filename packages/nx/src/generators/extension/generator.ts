@@ -27,9 +27,7 @@ function normalizeOptions(
 		: name;
 	const projectName = projectDirectory.replace(new RegExp("/", "g"), "-");
 	const projectRoot = `${getWorkspaceLayout(host).libsDir}/${projectDirectory}`;
-	const parsedTags = options.tags
-		? options.tags.split(",").map((s) => s.trim())
-		: [];
+	const parsedTags = options.tags ? options.tags.split(",").map(s => s.trim()) : [];
 
 	return {
 		...options,
@@ -63,7 +61,7 @@ export default async function (host: Tree, options: ExtensionGeneratorSchema) {
 		sourceRoot: `${normalizedOptions.projectRoot}/src`,
 		targets: {
 			build: {
-				executor: "@nx-vscode/extension:build",
+				executor: "@vscode-devkit/nx:build",
 			},
 		},
 		tags: normalizedOptions.parsedTags,

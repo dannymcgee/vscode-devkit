@@ -1,5 +1,5 @@
 module.exports = {
-	displayName: "extension-e2e",
+	displayName: "nx-e2e",
 	preset: "../../jest.preset.js",
 	globals: {
 		"ts-jest": {

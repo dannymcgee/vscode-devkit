@@ -15,7 +15,7 @@
 		"skipDefaultLibCheck": true,
 		"baseUrl": ".",
 		"paths": {
-			"nx-vscode/extension": ["packages/extension/src/index.ts"]
+			"vscode-devkit/nx": ["packages/nx/src/index.ts"]
 		}
 	},
 	"exclude": ["node_modules", "tmp"]

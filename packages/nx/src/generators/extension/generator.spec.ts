@@ -4,7 +4,7 @@ import { Tree, readProjectConfiguration } from "@nrwl/devkit";
 import generator from "./generator";
 import { ExtensionGeneratorSchema } from "./schema";
 
-describe("extension generator", () => {
+describe("nx generator", () => {
 	let appTree: Tree;
 	const options: ExtensionGeneratorSchema = { name: "test" };
 

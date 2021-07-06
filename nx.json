@@ -1,5 +1,5 @@
 {
-	"npmScope": "nx-vscode",
+	"npmScope": "vscode-devkit",
 	"affected": {
 		"defaultBase": "master"
 	},
@@ -27,12 +27,12 @@
 		]
 	},
 	"projects": {
-		"extension": {
+		"nx": {
 			"tags": []
 		},
-		"extension-e2e": {
+		"nx-e2e": {
 			"tags": [],
-			"implicitDependencies": ["extension"]
+			"implicitDependencies": ["nx"]
 		}
 	},
 	"workspaceLayout": {

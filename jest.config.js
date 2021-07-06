@@ -1,3 +1,3 @@
 module.exports = {
-	projects: ["<rootDir>/packages/extension", "<rootDir>/e2e\\extension-e2e"],
+	projects: ["<rootDir>/packages/nx", "<rootDir>/e2e\\nx-e2e"],
 };
