@@ -1,0 +1,78 @@
+{
+	"version": 2,
+	"projects": {
+		"extension": {
+			"root": "packages/extension",
+			"sourceRoot": "packages/extension/src",
+			"projectType": "library",
+			"targets": {
+				"lint": {
+					"executor": "@nrwl/linter:eslint",
+					"options": {
+						"lintFilePatterns": ["packages/extension/**/*.ts"]
+					}
+				},
+				"test": {
+					"executor": "@nrwl/jest:jest",
+					"outputs": ["coverage/packages/extension"],
+					"options": {
+						"jestConfig": "packages/extension/jest.config.js",
+						"passWithNoTests": true
+					}
+				},
+				"build": {
+					"executor": "@nrwl/node:package",
+					"outputs": ["{options.outputPath}"],
+					"options": {
+						"outputPath": "dist/packages/extension",
+						"tsConfig": "packages/extension/tsconfig.lib.json",
+						"packageJson": "packages/extension/package.json",
+						"main": "packages/extension/src/index.ts",
+						"assets": [
+							"packages/extension/*.md",
+							{
+								"input": "./packages/extension/src",
+								"glob": "**/!(*.ts)",
+								"output": "./src"
+							},
+							{
+								"input": "./packages/extension/src",
+								"glob": "**/*.d.ts",
+								"output": "./src"
+							},
+							{
+								"input": "./packages/extension",
+								"glob": "generators.json",
+								"output": "."
+							},
+							{
+								"input": "./packages/extension",
+								"glob": "executors.json",
+								"output": "."
+							}
+						]
+					}
+				}
+			}
+		},
+		"extension-e2e": {
+			"root": "e2e\\extension-e2e",
+			"projectType": "application",
+			"sourceRoot": "e2e\\extension-e2e/src",
+			"targets": {
+				"e2e": {
+					"executor": "@nrwl/nx-plugin:e2e",
+					"options": {
+						"target": "extension:build",
+						"npmPackageName": "@nx-vscode/extension",
+						"pluginOutputPath": "dist/packages/extension",
+						"jestConfig": "e2e/extension-e2e/jest.config.js"
+					}
+				}
+			}
+		}
+	},
+	"cli": {
+		"defaultCollection": "@nrwl/workspace"
+	}
+}
