@@ -3,7 +3,7 @@ import * as esbuild from "esbuild";
 import { promises as fs } from "fs";
 import * as path from "path";
 
-import { JsonObject, TMGrammar } from "../../types";
+import { JsonObject, TMGrammar } from "@vscode-devkit/grammar";
 import CLIOptions from "./schema";
 
 interface Options extends CLIOptions {

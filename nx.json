@@ -27,6 +27,9 @@
 		]
 	},
 	"projects": {
+		"grammar": {
+			"tags": []
+		},
 		"nx": {
 			"tags": []
 		},

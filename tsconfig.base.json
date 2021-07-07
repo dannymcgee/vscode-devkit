@@ -15,6 +15,7 @@
 		"skipDefaultLibCheck": true,
 		"baseUrl": ".",
 		"paths": {
+			"@vscode-devkit/grammar": ["packages/grammar/src/index.ts"],
 			"vscode-devkit/nx": ["packages/nx/src/index.ts"]
 		}
 	},

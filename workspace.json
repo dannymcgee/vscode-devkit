@@ -1,6 +1,38 @@
 {
 	"version": 2,
 	"projects": {
+		"grammar": {
+			"root": "packages/grammar",
+			"sourceRoot": "packages/grammar/src",
+			"projectType": "library",
+			"targets": {
+				"build": {
+					"executor": "@nrwl/node:package",
+					"outputs": ["{options.outputPath}"],
+					"options": {
+						"outputPath": "dist/packages/grammar",
+						"tsConfig": "packages/grammar/tsconfig.lib.json",
+						"packageJson": "packages/grammar/package.json",
+						"main": "packages/grammar/src/index.ts",
+						"assets": ["packages/grammar/*.md"]
+					}
+				},
+				"lint": {
+					"executor": "@nrwl/linter:eslint",
+					"options": {
+						"lintFilePatterns": ["packages/grammar/**/*.ts"]
+					}
+				},
+				"test": {
+					"executor": "@nrwl/jest:jest",
+					"outputs": ["coverage/packages/grammar"],
+					"options": {
+						"jestConfig": "packages/grammar/jest.config.js",
+						"passWithNoTests": true
+					}
+				}
+			}
+		},
 		"nx": {
 			"root": "packages/nx",
 			"sourceRoot": "packages/nx/src",
