@@ -1,6 +1,7 @@
 {
 	"name": "@vscode-devkit/nx",
 	"version": "0.0.1",
+	"license": "MIT OR Apache-2.0",
 	"main": "src/index.js",
 	"generators": "./generators.json",
 	"executors": "./executors.json"
