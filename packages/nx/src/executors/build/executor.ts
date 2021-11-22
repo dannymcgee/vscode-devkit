@@ -1,5 +1,6 @@
 import { ExecutorContext, parseTargetString, runExecutor } from "@nrwl/devkit";
 import * as chalk from "chalk";
+import * as cp from "child_process";
 import * as esbuild from "esbuild";
 import { promises as fs } from "fs";
 import * as path from "path";
@@ -19,6 +20,13 @@ export default async function (opts: CLIOptions, ctx: ExecutorContext) {
 		await bundle(options);
 		await copyAssets(options);
 		await runAdditionalTargets(options, ctx);
+
+		if (options.package || options.install) {
+			await packageExtension(options);
+		}
+		if (options.install) {
+			await installExtension(options);
+		}
 
 		return { success: true };
 	} catch (err) {
@@ -62,7 +70,10 @@ async function bundle(opts: Options) {
 	await esbuild.build({
 		entryPoints: [opts.entryPoint],
 		bundle: true,
-		target: ["node14.14"],
+		format: "cjs",
+		platform: "node",
+		target: "es2015",
+		external: ["vscode"],
 		outfile: opts.outputFile,
 	});
 }
@@ -92,4 +103,39 @@ async function runAdditionalTargets(opts: Options, ctx: ExecutorContext) {
 			}
 		}
 	}
+}
+
+function packageExtension(opts: Options) {
+	return new Promise<void>((resolve, reject) => {
+		cp.spawn("npx vsce", ["package"], {
+			cwd: opts.outputPath,
+			shell: true,
+			stdio: "inherit",
+		})
+			.on("error", reject)
+			.on("close", code => {
+				if (code) reject();
+				else resolve();
+			});
+	});
+}
+
+async function installExtension(opts: Options) {
+	let outPathRel = path.relative(__dirname, opts.outputPath);
+	let pkgRel = path.join(outPathRel, "package.json");
+	let { name, version } = await import(pkgRel);
+	let vsix = `"${name}-${version}.vsix"`;
+
+	return new Promise<void>((resolve, reject) => {
+		cp.spawn("code", ["--install-extension", vsix], {
+			cwd: opts.outputPath,
+			shell: true,
+			stdio: "inherit",
+		})
+			.on("error", reject)
+			.on("close", code => {
+				if (code) reject();
+				else resolve();
+			});
+	});
 }

@@ -30,6 +30,14 @@
 		"outputFile": {
 			"type": "string",
 			"description": "Path to the bundled output file, relative to `outputPath`. This should match the `main` field of your `package.json`."
+		},
+		"package": {
+			"type": "boolean",
+			"description": "Package the extension with `vsce` after building."
+		},
+		"install": {
+			"type": "boolean",
+			"description": "Install the local `.vsix` file after building. Implies `package=true`."
 		}
 	},
 	"required": ["entryPoint", "outputPath", "outputFile"]

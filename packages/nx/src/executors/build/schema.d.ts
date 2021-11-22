@@ -4,4 +4,6 @@ export default interface Options {
 	entryPoint: string;
 	outputPath: string;
 	outputFile: string;
+	package?: boolean;
+	install?: boolean;
 }
