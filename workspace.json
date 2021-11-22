@@ -14,7 +14,11 @@
 						"tsConfig": "packages/grammar/tsconfig.lib.json",
 						"packageJson": "packages/grammar/package.json",
 						"main": "packages/grammar/src/index.ts",
-						"assets": ["packages/grammar/*.md"]
+						"assets": [
+							"LICENSE",
+							"LICENSE*.md",
+							"packages/grammar/*.md"
+						]
 					}
 				},
 				"lint": {
@@ -61,6 +65,9 @@
 						"packageJson": "packages/nx/package.json",
 						"main": "packages/nx/src/index.ts",
 						"assets": [
+							"LICENSE",
+							"LICENSE*.md",
+							"packages/grammar/*.md",
 							"packages/nx/*.md",
 							{
 								"input": "./packages/nx/src",
