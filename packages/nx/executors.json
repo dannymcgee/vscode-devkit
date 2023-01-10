@@ -4,7 +4,7 @@
 		"build": {
 			"implementation": "./src/executors/build/executor",
 			"schema": "./src/executors/build/schema.json",
-			"description": "Build a VSCode nx"
+			"description": "Build a VSCode extension"
 		},
 		"grammar": {
 			"implementation": "./src/executors/grammar/executor",
