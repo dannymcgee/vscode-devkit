@@ -25,6 +25,36 @@ interface NormalizedOptions {
 	parsedTags: string[];
 }
 
+export default async function (host: Tree, opts: CliOptions) {
+	const options = normalizeOptions(host, opts);
+
+	addProjectConfiguration(host, options.projectName, {
+		root: options.projectRoot,
+		projectType: "library",
+		sourceRoot: `${options.projectRoot}/src`,
+		targets: {
+			build: {
+				executor: "@vscode-devkit/nx:build",
+				options: {
+					additionalTargets: [],
+					assets: ["package.json", "README.md"],
+					entryPoint: "src/index.ts",
+					outputPath: `dist/${options.projectName}`,
+					outputFile: "main.js",
+					package: false,
+					install: false,
+				},
+			},
+		},
+		tags: options.parsedTags,
+	});
+
+	addFiles(host, options);
+
+	await formatFiles(host);
+}
+
+
 function normalizeOptions(
 	host: Tree,
 	{ name, displayName, publisher, ...opts }: CliOptions,
@@ -71,24 +101,4 @@ function addFiles(host: Tree, options: NormalizedOptions) {
 		options.projectRoot,
 		templateOptions
 	);
-}
-
-export default async function (host: Tree, opts: CliOptions) {
-	const options = normalizeOptions(host, opts);
-
-	addProjectConfiguration(host, options.projectName, {
-		root: options.projectRoot,
-		projectType: "library",
-		sourceRoot: `${options.projectRoot}/src`,
-		targets: {
-			build: {
-				executor: "@vscode-devkit/nx:build",
-			},
-		},
-		tags: options.parsedTags,
-	});
-
-	addFiles(host, options);
-
-	await formatFiles(host);
 }

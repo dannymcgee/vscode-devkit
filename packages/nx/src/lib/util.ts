@@ -1,6 +1,10 @@
-import { ExecutorContext, ProjectConfiguration } from "@nrwl/devkit";
+import {
+	ExecutorContext,
+	ProjectConfiguration,
+	ProjectsConfigurations,
+} from "@nrwl/devkit";
 
-export function getProject(ctx: ExecutorContext, name?: string): ProjectConfiguration {
+export function getProjects(ctx: ExecutorContext): ProjectsConfigurations {
 	let projects = ctx.projectsConfigurations ?? ctx.workspace;
 	if (!projects) {
 		throw new Error(
@@ -9,10 +13,35 @@ export function getProject(ctx: ExecutorContext, name?: string): ProjectConfigur
 		);
 	}
 
-	if (name) return projects[name];
+	return projects;
+}
 
-	if (!ctx.projectName)
-		throw new Error("No `projectName` in the executor context.");
+export function getProject(ctx: ExecutorContext, name?: string): ProjectConfiguration {
+	let { projects } = getProjects(ctx);
+	name ??= ctx.projectName;
 
-	return projects[ctx.projectName];
+	if (!name) {
+		const err = new Error(
+			"No project name was provided to `getProject`, and no `projectName` " +
+			"field exists in the executor context."
+		);
+
+		console.log("Executor context:");
+		console.log(ctx);
+
+		throw err;
+	}
+
+	if (!projects[name]) {
+		const err = new Error(`Project "${name}" not found in projects configuration`);
+
+		if (ctx.isVerbose) {
+			console.log("Project configuration:");
+			console.log(projects);
+		}
+
+		throw err;
+	}
+
+	return projects[name];
 }

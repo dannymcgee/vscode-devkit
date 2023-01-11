@@ -1,0 +1,34 @@
+import { TMGrammarScope } from "@vscode-devkit/grammar";
+
+export const punctuation: TMGrammarScope = {
+	patterns: [
+		{
+			match: /[()]/,
+			name: "punctuation.brace.round.<%= id %>",
+		},
+		{
+			match: /[{}]/,
+			name: "punctuation.brace.curly.<%= id %>",
+		},
+		{
+			match: /[\[\]]/,
+			name: "punctuation.brace.square.<%= id %>",
+		},
+		{
+			match: /,/,
+			name: "punctuation.separator.comma.<%= id %>",
+		},
+		{
+			match: /:/,
+			name: "punctuation.separator.key-value.<%= id %>",
+		},
+		{
+			match: /\./,
+			name: "punctuation.accessor.<%= id %>",
+		},
+		{
+			match: /;/,
+			name: "punctuation.terminator.<%= id %>",
+		},
+	],
+};

@@ -1,12 +1,17 @@
 {
-	"$schema": "http://json-schema.org/schema",
-	"name": "extension",
-	"version": "0.0.1",
-	"generators": {
-		"extension": {
-			"factory": "./src/generators/extension/generator",
-			"schema": "./src/generators/extension/schema.json",
-			"description": "Generate a VS Code extension"
-		}
-	}
+  "$schema": "http://json-schema.org/schema",
+  "name": "extension",
+  "version": "0.0.1",
+  "generators": {
+    "extension": {
+      "factory": "./src/generators/extension/generator",
+      "schema": "./src/generators/extension/schema.json",
+      "description": "Generate a VS Code extension"
+    },
+    "grammar": {
+      "factory": "./src/generators/grammar/generator",
+      "schema": "./src/generators/grammar/schema.json",
+      "description": "Generate a VS Code TextMate grammar for syntax highlighting"
+    }
+  }
 }
