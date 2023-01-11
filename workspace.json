@@ -7,13 +7,13 @@
 			"projectType": "library",
 			"targets": {
 				"build": {
-					"executor": "@nrwl/node:package",
+					"executor": "@nrwl/js:tsc",
 					"outputs": ["{options.outputPath}"],
 					"options": {
 						"outputPath": "dist/packages/grammar",
+						"main": "packages/grammar/src/index.ts",
 						"tsConfig": "packages/grammar/tsconfig.lib.json",
 						"packageJson": "packages/grammar/package.json",
-						"main": "packages/grammar/src/index.ts",
 						"assets": [
 							"LICENSE",
 							"LICENSE*.md",
@@ -29,13 +29,14 @@
 				},
 				"test": {
 					"executor": "@nrwl/jest:jest",
-					"outputs": ["coverage/packages/grammar"],
+					"outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
 					"options": {
 						"jestConfig": "packages/grammar/jest.config.js",
 						"passWithNoTests": true
 					}
 				}
-			}
+			},
+			"tags": []
 		},
 		"nx": {
 			"root": "packages/nx",
@@ -57,13 +58,13 @@
 					}
 				},
 				"build": {
-					"executor": "@nrwl/node:package",
+					"executor": "@nrwl/js:tsc",
 					"outputs": ["{options.outputPath}"],
 					"options": {
 						"outputPath": "dist/packages/nx",
+						"main": "packages/nx/src/index.ts",
 						"tsConfig": "packages/nx/tsconfig.lib.json",
 						"packageJson": "packages/nx/package.json",
-						"main": "packages/nx/src/index.ts",
 						"assets": [
 							"LICENSE",
 							"LICENSE*.md",
@@ -92,12 +93,13 @@
 						]
 					}
 				}
-			}
+			},
+			"tags": []
 		},
 		"nx-e2e": {
-			"root": "e2e\\nx-e2e",
+			"root": "e2e/nx-e2e",
 			"projectType": "application",
-			"sourceRoot": "e2e\\nx-e2e/src",
+			"sourceRoot": "e2e/nx-e2e/src",
 			"targets": {
 				"e2e": {
 					"executor": "@nrwl/nx-plugin:e2e",
@@ -108,10 +110,9 @@
 						"jestConfig": "e2e/nx-e2e/jest.config.js"
 					}
 				}
-			}
+			},
+			"tags": [],
+			"implicitDependencies": ["nx"]
 		}
-	},
-	"cli": {
-		"defaultCollection": "@nrwl/workspace"
 	}
 }

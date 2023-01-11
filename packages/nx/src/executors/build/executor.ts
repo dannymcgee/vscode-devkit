@@ -6,6 +6,7 @@ import { promises as fs } from "fs";
 import * as path from "path";
 import * as rimraf from "rimraf";
 
+import { getProject } from "../../lib/util";
 import CLIOptions from "./schema";
 
 interface Options extends CLIOptions {
@@ -40,10 +41,7 @@ export default async function (opts: CLIOptions, ctx: ExecutorContext) {
 }
 
 function normalizeOptions(opts: CLIOptions, ctx: ExecutorContext): Options {
-	if (!ctx.projectName) {
-		throw new Error("Expected project name to be non-null");
-	}
-	let projectRoot = ctx.workspace.projects[ctx.projectName].root;
+	let projectRoot = getProject(ctx).root;
 	let entryPoint = path.join(ctx.root, projectRoot, opts.entryPoint);
 	let outputPath = path.join(ctx.root, opts.outputPath);
 	let outputFile = path.join(outputPath, opts.outputFile);

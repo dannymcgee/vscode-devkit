@@ -4,6 +4,7 @@ import { promises as fs } from "fs";
 import * as path from "path";
 
 import { JsonObject, TMGrammar } from "@vscode-devkit/grammar";
+import { getProject } from "../../lib/util";
 import CLIOptions from "./schema";
 
 interface Options extends CLIOptions {
@@ -31,12 +32,7 @@ async function normalizeOptions(
 	opts: CLIOptions,
 	ctx: ExecutorContext
 ): Promise<Options> {
-	if (!ctx.projectName) {
-		throw new Error("Expected project name to be non-null");
-	}
-	let project = ctx.workspace.projects[ctx.projectName];
-	let projectRoot = path.join(ctx.root, project.root);
-
+	let projectRoot = path.join(ctx.root, getProject(ctx).root);
 	let entryPoint = path.join(ctx.root, opts.entryPoint);
 	let outputPath = path.join(ctx.root, opts.outputPath);
 	let grammarModulePath = path.join(outputPath, `${opts.name}.tmLanguage.js`);
