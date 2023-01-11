@@ -7,12 +7,51 @@
 	"properties": {
 		"name": {
 			"type": "string",
-			"description": "",
+			"description": "Machine-readable extension name",
 			"$default": {
 				"$source": "argv",
 				"index": 0
 			},
-			"x-prompt": "What name would you like to use?"
+			"pattern": "[-a-z0-9]+",
+			"x-prompt": "Enter the machine-readable extension name (only lowercase alphanumerics and hyphens allowed):"
+		},
+		"displayName": {
+			"type": "string",
+			"description": "Human-friendly extension name",
+			"$default": {
+				"$source": "argv",
+				"index": 1
+			},
+			"x-prompt": "Enter the display name:"
+		},
+		"description": {
+			"type": "string",
+			"description": "A brief description for the package.json",
+			"$default": ""
+		},
+		"author": {
+			"type": "string",
+			"description": "Author field for the package.json",
+			"$default": ""
+		},
+		"publisher": {
+			"type": "string",
+			"description": "Publisher ID for the Visual Studio Marketplace",
+			"$default": {
+				"$source": "argv",
+				"index": 2
+			},
+			"x-prompt": "Enter the VS Marketplace Publisher ID:"
+		},
+		"license": {
+			"type": "string",
+			"description": "License ID for the package.json",
+			"$default": "MIT"
+		},
+		"gitUrl": {
+			"type": "string",
+			"description": "URL for the Git repository",
+			"$default": ""
 		},
 		"tags": {
 			"type": "string",
@@ -25,5 +64,5 @@
 			"alias": "d"
 		}
 	},
-	"required": ["name"]
+	"required": ["name", "displayName"]
 }
