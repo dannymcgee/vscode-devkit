@@ -105,8 +105,6 @@
 					"executor": "@nrwl/nx-plugin:e2e",
 					"options": {
 						"target": "nx:build",
-						"npmPackageName": "@vscode-devkit/nx",
-						"pluginOutputPath": "dist/packages/nx",
 						"jestConfig": "e2e/nx-e2e/jest.config.js"
 					}
 				}
