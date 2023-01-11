@@ -8,9 +8,17 @@ import {
 	Tree,
 } from "@nrwl/devkit";
 import * as path from "path";
-import { ExtensionGeneratorSchema } from "./schema";
 
-interface NormalizedSchema extends ExtensionGeneratorSchema {
+import CliOptions from "./schema";
+
+interface NormalizedOptions {
+	name: string;
+	displayName: string;
+	description: string;
+	author: string;
+	publisher: string;
+	license: string;
+	gitUrl: string;
 	projectName: string;
 	projectRoot: string;
 	projectDirectory: string;
@@ -19,18 +27,29 @@ interface NormalizedSchema extends ExtensionGeneratorSchema {
 
 function normalizeOptions(
 	host: Tree,
-	options: ExtensionGeneratorSchema
-): NormalizedSchema {
-	const name = names(options.name).fileName;
-	const projectDirectory = options.directory
-		? `${names(options.directory).fileName}/${name}`
+	{ name, displayName, publisher, ...opts }: CliOptions,
+): NormalizedOptions {
+	const description = opts.description ?? "";
+	const author = opts.author ?? "";
+	const gitUrl = opts.gitUrl ?? "";
+	const license = opts.license ?? "MIT";
+
+	const projectDirectory = opts.directory
+		? `${names(opts.directory).fileName}/${name}`
 		: name;
+
 	const projectName = projectDirectory.replace(/\//g, "-");
 	const projectRoot = `${getWorkspaceLayout(host).libsDir}/${projectDirectory}`;
-	const parsedTags = options.tags?.split(",").map(s => s.trim()) ?? [];
+	const parsedTags = opts.tags?.split(",").map(s => s.trim()) ?? [];
 
 	return {
-		...options,
+		name,
+		displayName,
+		publisher,
+		description,
+		author,
+		gitUrl,
+		license,
 		projectName,
 		projectRoot,
 		projectDirectory,
@@ -38,13 +57,14 @@ function normalizeOptions(
 	};
 }
 
-function addFiles(host: Tree, options: NormalizedSchema) {
+function addFiles(host: Tree, options: NormalizedOptions) {
 	const templateOptions = {
 		...options,
 		...names(options.name),
 		offsetFromRoot: offsetFromRoot(options.projectRoot),
 		template: "",
 	};
+
 	generateFiles(
 		host,
 		path.join(__dirname, "files"),
@@ -53,19 +73,22 @@ function addFiles(host: Tree, options: NormalizedSchema) {
 	);
 }
 
-export default async function (host: Tree, options: ExtensionGeneratorSchema) {
-	const normalizedOptions = normalizeOptions(host, options);
-	addProjectConfiguration(host, normalizedOptions.projectName, {
-		root: normalizedOptions.projectRoot,
+export default async function (host: Tree, opts: CliOptions) {
+	const options = normalizeOptions(host, opts);
+
+	addProjectConfiguration(host, options.projectName, {
+		root: options.projectRoot,
 		projectType: "library",
-		sourceRoot: `${normalizedOptions.projectRoot}/src`,
+		sourceRoot: `${options.projectRoot}/src`,
 		targets: {
 			build: {
 				executor: "@vscode-devkit/nx:build",
 			},
 		},
-		tags: normalizedOptions.parsedTags,
+		tags: options.parsedTags,
 	});
-	addFiles(host, normalizedOptions);
+
+	addFiles(host, options);
+
 	await formatFiles(host);
 }

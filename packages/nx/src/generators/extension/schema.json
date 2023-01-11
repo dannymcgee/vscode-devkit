@@ -26,13 +26,11 @@
 		},
 		"description": {
 			"type": "string",
-			"description": "A brief description for the package.json",
-			"$default": ""
+			"description": "A brief description for the package.json"
 		},
 		"author": {
 			"type": "string",
-			"description": "Author field for the package.json",
-			"$default": ""
+			"description": "Author field for the package.json"
 		},
 		"publisher": {
 			"type": "string",
@@ -50,8 +48,7 @@
 		},
 		"gitUrl": {
 			"type": "string",
-			"description": "URL for the Git repository",
-			"$default": ""
+			"description": "URL for the Git repository"
 		},
 		"tags": {
 			"type": "string",
@@ -64,5 +61,9 @@
 			"alias": "d"
 		}
 	},
-	"required": ["name", "displayName"]
+	"required": [
+		"name",
+		"displayName",
+		"publisher"
+	]
 }
