@@ -1,5 +1,7 @@
+import { AssetGlob } from "@nrwl/workspace/src/utilities/assets";
+
 export default interface Options {
-	assets?: string[];
+	assets?: (string|AssetGlob)[];
 	additionalTargets?: string[];
 	entryPoint: string;
 	outputPath: string;

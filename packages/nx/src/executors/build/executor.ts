@@ -2,11 +2,10 @@ import { ExecutorContext, parseTargetString, runExecutor } from "@nrwl/devkit";
 import * as chalk from "chalk";
 import * as cp from "child_process";
 import * as esbuild from "esbuild";
-import { promises as fs } from "fs";
 import * as path from "path";
 import * as rimraf from "rimraf";
 
-import { getProject } from "../../lib/util";
+import * as nxUtil from "../../lib/util";
 import CLIOptions from "./schema";
 
 interface Options extends CLIOptions {
@@ -41,7 +40,7 @@ export default async function (opts: CLIOptions, ctx: ExecutorContext) {
 }
 
 function normalizeOptions(opts: CLIOptions, ctx: ExecutorContext): Options {
-	let projectRoot = getProject(ctx).root;
+	let projectRoot = nxUtil.getProject(ctx).root;
 	let entryPoint = path.join(ctx.root, projectRoot, opts.entryPoint);
 	let outputPath = path.join(ctx.root, opts.outputPath);
 	let outputFile = path.join(outputPath, opts.outputFile);
@@ -76,17 +75,10 @@ async function bundle(opts: Options) {
 	});
 }
 
-async function copyAssets(opts: Options) {
-	if (!opts.assets) return;
+async function copyAssets({ assets, projectRoot, outputPath }: Options) {
+	if (!assets) return;
 
-	await Promise.all(
-		opts.assets.map(file =>
-			fs.copyFile(
-				path.join(opts.projectRoot, file),
-				path.join(opts.outputPath, file)
-			)
-		)
-	);
+	await nxUtil.copyAssets({ assets, projectRoot, outputPath });
 }
 
 async function runAdditionalTargets(opts: Options, ctx: ExecutorContext) {

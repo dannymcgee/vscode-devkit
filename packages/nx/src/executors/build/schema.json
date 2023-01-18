@@ -8,7 +8,25 @@
 		"assets": {
 			"type": "array",
 			"items": {
-				"type": "string"
+				"oneOf": [
+					{
+						"type": "string"
+					},
+					{
+						"type": "object",
+						"properties": {
+							"input": { "type": "string" },
+							"output": { "type": "string" },
+							"glob": { "type": "string" },
+							"ignore": {
+								"type": "array",
+								"items": { "type": "string" }
+							},
+							"dot": { "type": "boolean" }
+						},
+						"required": ["input", "output", "glob"]
+					}
+				]
 			},
 			"description": "File paths to be copied from the project root to the output path."
 		},

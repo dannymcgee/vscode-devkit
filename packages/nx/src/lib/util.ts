@@ -3,6 +3,9 @@ import {
 	ProjectConfiguration,
 	ProjectsConfigurations,
 } from "@nrwl/devkit";
+import { AssetGlob, assetGlobsToFiles } from "@nrwl/workspace/src/utilities/assets";
+import * as fs from "fs";
+import * as path from "path";
 
 export function getProjects(ctx: ExecutorContext): ProjectsConfigurations {
 	let projects = ctx.projectsConfigurations ?? ctx.workspace;
@@ -44,4 +47,25 @@ export function getProject(ctx: ExecutorContext, name?: string): ProjectConfigur
 	}
 
 	return projects[name];
+}
+
+interface CopyAssetsParams {
+	assets: (string|AssetGlob)[];
+	/** Absolute path to the project root. */
+	projectRoot: string;
+	/** Absolute path to the output root. */
+	outputPath: string;
+}
+
+export async function copyAssets({ assets, projectRoot, outputPath }: CopyAssetsParams) {
+	await Promise.all(
+		assetGlobsToFiles(assets, projectRoot, outputPath)
+			.map(async file => {
+				const dirname = path.dirname(file.output);
+				if (!fs.existsSync(dirname))
+					await fs.promises.mkdir(dirname, { recursive: true });
+
+				await fs.promises.copyFile(file.input, file.output);
+			})
+	);
 }
