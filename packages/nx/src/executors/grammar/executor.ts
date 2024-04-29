@@ -1,9 +1,10 @@
 import { ExecutorContext } from "@nrwl/devkit";
+import { JsonObject, TMGrammar } from "@vscode-devkit/grammar";
+import * as chalk from "chalk";
 import * as esbuild from "esbuild";
 import { promises as fs } from "fs";
 import * as path from "path";
 
-import { JsonObject, TMGrammar } from "@vscode-devkit/grammar";
 import { getProject } from "../../lib/util";
 import CLIOptions from "./schema";
 
@@ -21,6 +22,12 @@ export default async function (opts: CLIOptions, ctx: ExecutorContext) {
 
 		return { success: true };
 	} catch (err) {
+		if (err) {
+			let label = chalk.bold.redBright.inverse(" ERROR ");
+			let message = chalk.bold.redBright(err.stack ?? err);
+			console.log(`${label} ${message}`);
+		}
+
 		return {
 			success: false,
 			reason: err?.stack,
