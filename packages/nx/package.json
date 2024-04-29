@@ -1,6 +1,6 @@
 {
 	"name": "@vscode-devkit/nx",
-	"version": "0.0.6",
+	"version": "0.0.7",
 	"license": "MIT OR Apache-2.0",
 	"main": "src/index.js",
 	"generators": "./generators.json",
@@ -13,5 +13,10 @@
 		"name": "Danny McGee",
 		"email": "dannymcgee@gmail.com",
 		"url": "https://github.com/dannymcgee"
+	},
+	"peerDependencies": {
+		"@vscode-devkit/grammar": "~0.0.1",
+		"esbuild": "^0.12.15",
+		"tslib": "^2.3.0"
 	}
 }
