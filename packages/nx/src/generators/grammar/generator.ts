@@ -11,7 +11,7 @@ import {
 	Tree,
 	updateJson,
 	updateProjectConfiguration,
-} from "@nrwl/devkit";
+} from "@nx/devkit";
 import chalk = require("chalk");
 import * as path from "path";
 
@@ -43,7 +43,7 @@ export default async function (tree: Tree, opts: CliOptions) {
 					name: options.id,
 					entryPoint: `${options.projectRoot}/src/index.ts`,
 					outputPath: options.outputPath,
-				}
+				},
 			},
 		},
 		tags: options.parsedTags,
@@ -53,16 +53,16 @@ export default async function (tree: Tree, opts: CliOptions) {
 
 	try {
 		updateFiles(tree, options);
-	} catch(err) {
+	} catch (err) {
 		const label = chalk.bold.yellowBright.inverse(" WARN ");
 		console.log(`${label} Unable to update parent project: ${err.message}`);
 		console.log(
 			`${label} You will need to update the extension configuration manually to reference the ` +
-			`new grammar.`
+				`new grammar.`
 		);
 		console.log(
 			`${label} Alternatively, you may undo the changes made, fix the underlying issue, and ` +
-			`try running the generator again.`
+				`try running the generator again.`
 		);
 	}
 
@@ -78,7 +78,8 @@ function normalizeOptions(tree: Tree, opts: CliOptions): NormalizedOptions {
 	const projectRoot = `${getWorkspaceLayout(tree).libsDir}/${projectDirectory}`;
 	const parsedTags = opts.tags?.split(",").map(s => s.trim()) ?? [];
 
-	const outputPath = opts.outputPath ?? findOutputPath(tree, opts.parentProjectName);
+	const outputPath =
+		opts.outputPath ?? findOutputPath(tree, opts.parentProjectName);
 
 	return {
 		...opts,
@@ -95,7 +96,7 @@ function findOutputPath(tree: Tree, parentProject: string): string {
 	try {
 		const parentConfig = readProjectConfiguration(tree, parentProject);
 		options = getParentBuildTarget(parentConfig).options;
-	} catch(err) {
+	} catch (err) {
 		throw new Error(
 			`${err.message}. You will need to manually specify an "outputPath" for the grammar.`
 		);
@@ -104,13 +105,15 @@ function findOutputPath(tree: Tree, parentProject: string): string {
 	if (!options)
 		throw new Error(
 			`No options found for ${parentProject}'s "build" target. You will need ` +
-			`to manually specify an "outputPath" for the grammar.`
+				`to manually specify an "outputPath" for the grammar.`
 		);
 
 	return options.outputPath;
 }
 
-function getParentBuildTarget(project: ProjectConfiguration): TargetConfiguration<ExtensionBuildOptions> {
+function getParentBuildTarget(
+	project: ProjectConfiguration
+): TargetConfiguration<ExtensionBuildOptions> {
 	const targets = project.targets;
 	if (!targets)
 		throw new Error(`No targets found for parent project "${project.name}"`);
@@ -147,9 +150,9 @@ function updateFiles(tree: Tree, opts: NormalizedOptions) {
 			build: {
 				...buildTarget,
 				options: {
-					...buildTarget.options ?? {},
+					...(buildTarget.options ?? {}),
 					additionalTargets: [
-						...buildTarget.options?.additionalTargets ?? [],
+						...(buildTarget.options?.additionalTargets ?? []),
 						`${opts.name}:build`,
 					],
 				},
@@ -168,15 +171,15 @@ function updateFiles(tree: Tree, opts: NormalizedOptions) {
 	updateJson(tree, parentPkgJson, pkg => ({
 		...pkg,
 		contributes: {
-			...pkg["contributes"] ?? {},
+			...(pkg["contributes"] ?? {}),
 			grammars: [
-				...pkg["contributes"]?.["grammars"] ?? [],
+				...(pkg["contributes"]?.["grammars"] ?? []),
 				{
 					language: opts.id,
 					scopeName: opts.scopeName,
 					path: path.join(outputRoot, `${opts.id}.tmLanguage.json`),
-				}
-			]
-		}
+				},
+			],
+		},
 	}));
 }
