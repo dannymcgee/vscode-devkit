@@ -12,7 +12,8 @@
 				"main": "packages/grammar/src/index.ts",
 				"tsConfig": "packages/grammar/tsconfig.lib.json",
 				"packageJson": "packages/grammar/package.json",
-				"assets": ["LICENSE", "LICENSE*.md", "packages/grammar/*.md"]
+				"assets": ["LICENSE", "LICENSE*.md", "packages/grammar/*.md"],
+				"updateBuildableProjectDepsInPackageJson": true
 			}
 		},
 		"lint": {
