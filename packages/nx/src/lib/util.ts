@@ -3,7 +3,7 @@ import {
 	ProjectConfiguration,
 	ProjectsConfigurations,
 } from "@nx/devkit";
-import { AssetGlob, assetGlobsToFiles } from "@nx/workspace/src/utilities/assets";
+import { AssetGlob, assetGlobsToFiles } from "@nx/js/src/utils/assets/assets";
 import * as fs from "fs";
 import * as path from "path";
 
