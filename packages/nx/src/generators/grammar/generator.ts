@@ -11,7 +11,7 @@ import {
 	Tree,
 	updateJson,
 	updateProjectConfiguration,
-} from "@nrwl/devkit";
+} from "@nx/devkit";
 import chalk = require("chalk");
 import * as path from "path";
 
@@ -43,7 +43,7 @@ export default async function (tree: Tree, opts: CliOptions) {
 					name: options.id,
 					entryPoint: `${options.projectRoot}/src/index.ts`,
 					outputPath: options.outputPath,
-				}
+				},
 			},
 		},
 		tags: options.parsedTags,
@@ -53,16 +53,16 @@ export default async function (tree: Tree, opts: CliOptions) {
 
 	try {
 		updateFiles(tree, options);
-	} catch(err) {
+	} catch (err) {
 		const label = chalk.bold.yellowBright.inverse(" WARN ");
 		console.log(`${label} Unable to update parent project: ${err.message}`);
 		console.log(
 			`${label} You will need to update the extension configuration manually to reference the ` +
-			`new grammar.`
+				`new grammar.`
 		);
 		console.log(
 			`${label} Alternatively, you may undo the changes made, fix the underlying issue, and ` +
-			`try running the generator again.`
+				`try running the generator again.`
 		);
 	}
 
@@ -94,8 +94,9 @@ function findOutputPath(tree: Tree, parentProject: string): string {
 	let options: ExtensionBuildOptions | undefined;
 	try {
 		const parentConfig = readProjectConfiguration(tree, parentProject);
-		options = getParentBuildTarget(parentConfig).options;
-	} catch(err) {
+		const [, buildTarget] = getParentBuildTarget(parentConfig);
+		options = buildTarget.options;
+	} catch (err) {
 		throw new Error(
 			`${err.message}. You will need to manually specify an "outputPath" for the grammar.`
 		);
@@ -103,22 +104,31 @@ function findOutputPath(tree: Tree, parentProject: string): string {
 
 	if (!options)
 		throw new Error(
-			`No options found for ${parentProject}'s "build" target. You will need ` +
-			`to manually specify an "outputPath" for the grammar.`
+			`No options found for ${parentProject}'s build target. You will need ` +
+				`to manually specify an "outputPath" for the grammar.`
 		);
 
 	return options.outputPath;
 }
 
-function getParentBuildTarget(project: ProjectConfiguration): TargetConfiguration<ExtensionBuildOptions> {
+type BuildConfiguration = TargetConfiguration<ExtensionBuildOptions>;
+
+function getParentBuildTarget(project: ProjectConfiguration): [string, BuildConfiguration] {
 	const targets = project.targets;
 	if (!targets)
 		throw new Error(`No targets found for parent project "${project.name}"`);
 
-	if (!("build" in targets))
-		throw new Error(`No "build" target found in ${project.name} targets`);
+	const buildTarget = Object
+		.entries(targets)
+		.find(([_key, target]) => target.executor === "@vscode-devkit/nx:build");
 
-	return targets["build"];
+	if (!buildTarget)
+		throw new Error(
+			`Failed to find target with "@vscode-devkit/nx:build" executor ` +
+				`in ${project.name} targets`
+		);
+
+	return buildTarget;
 }
 
 function addFiles(tree: Tree, opts: NormalizedOptions) {
@@ -138,18 +148,18 @@ function addFiles(tree: Tree, opts: NormalizedOptions) {
 
 function updateFiles(tree: Tree, opts: NormalizedOptions) {
 	const parentConfig = readProjectConfiguration(tree, opts.parentProjectName);
-	const buildTarget = getParentBuildTarget(parentConfig);
+	const [build, buildTarget] = getParentBuildTarget(parentConfig);
 
 	updateProjectConfiguration(tree, opts.parentProjectName, {
 		...parentConfig,
 		targets: {
 			...parentConfig.targets,
-			build: {
+			[build]: {
 				...buildTarget,
 				options: {
-					...buildTarget.options ?? {},
+					...(buildTarget.options ?? {}),
 					additionalTargets: [
-						...buildTarget.options?.additionalTargets ?? [],
+						...(buildTarget.options?.additionalTargets ?? []),
 						`${opts.name}:build`,
 					],
 				},
@@ -168,15 +178,15 @@ function updateFiles(tree: Tree, opts: NormalizedOptions) {
 	updateJson(tree, parentPkgJson, pkg => ({
 		...pkg,
 		contributes: {
-			...pkg["contributes"] ?? {},
+			...(pkg["contributes"] ?? {}),
 			grammars: [
-				...pkg["contributes"]?.["grammars"] ?? [],
+				...(pkg["contributes"]?.["grammars"] ?? []),
 				{
 					language: opts.id,
 					scopeName: opts.scopeName,
 					path: path.join(outputRoot, `${opts.id}.tmLanguage.json`),
-				}
-			]
-		}
+				},
+			],
+		},
 	}));
 }

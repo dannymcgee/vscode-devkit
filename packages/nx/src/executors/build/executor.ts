@@ -1,4 +1,4 @@
-import { ExecutorContext, parseTargetString, runExecutor } from "@nrwl/devkit";
+import { ExecutorContext, parseTargetString, runExecutor } from "@nx/devkit";
 import * as chalk from "chalk";
 import * as cp from "child_process";
 import * as esbuild from "esbuild";

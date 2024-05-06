@@ -6,7 +6,7 @@ import {
 	names,
 	offsetFromRoot,
 	Tree,
-} from "@nrwl/devkit";
+} from "@nx/devkit";
 import * as path from "path";
 
 import CliOptions from "./schema";
@@ -53,7 +53,6 @@ export default async function (host: Tree, opts: CliOptions) {
 
 	await formatFiles(host);
 }
-
 
 function normalizeOptions(
 	host: Tree,

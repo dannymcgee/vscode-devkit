@@ -2,8 +2,8 @@ import {
 	ExecutorContext,
 	ProjectConfiguration,
 	ProjectsConfigurations,
-} from "@nrwl/devkit";
-import { AssetGlob, assetGlobsToFiles } from "@nrwl/workspace/src/utilities/assets";
+} from "@nx/devkit";
+import { AssetGlob, assetGlobsToFiles } from "@nx/js/src/utils/assets/assets";
 import * as fs from "fs";
 import * as path from "path";
 
@@ -12,7 +12,7 @@ export function getProjects(ctx: ExecutorContext): ProjectsConfigurations {
 	if (!projects) {
 		throw new Error(
 			"Failed to find project configurations: " +
-			"neither `projectsConfigurations` nor `workspace` exist in the executor configuration"
+				"neither `projectsConfigurations` nor `workspace` exist in the executor configuration"
 		);
 	}
 
@@ -26,7 +26,7 @@ export function getProject(ctx: ExecutorContext, name?: string): ProjectConfigur
 	if (!name) {
 		const err = new Error(
 			"No project name was provided to `getProject`, and no `projectName` " +
-			"field exists in the executor context."
+				"field exists in the executor context."
 		);
 
 		console.log("Executor context:");
@@ -57,7 +57,7 @@ interface CopyAssetsParams {
 	outputPath: string;
 }
 
-export async function copyAssets({ assets, projectRoot, outputPath }: CopyAssetsParams) {
+export async function copyAssets({assets, projectRoot, outputPath}: CopyAssetsParams) {
 	await Promise.all(
 		assetGlobsToFiles(assets, projectRoot, outputPath)
 			.map(async file => {

@@ -1,12 +1,16 @@
-import { createTreeWithEmptyWorkspace } from "@nrwl/devkit/testing";
-import { Tree, readProjectConfiguration } from "@nrwl/devkit";
+import { createTreeWithEmptyWorkspace } from "@nx/devkit/testing";
+import { Tree, readProjectConfiguration } from "@nx/devkit";
 
 import generator from "./generator";
-import { ExtensionGeneratorSchema } from "./schema";
+import ExtensionGeneratorSchema from "./schema";
 
 describe("nx generator", () => {
 	let appTree: Tree;
-	const options: ExtensionGeneratorSchema = { name: "test" };
+	const options: ExtensionGeneratorSchema = {
+		name: "test",
+		displayName: "Test",
+		publisher: "testymctesterson",
+	};
 
 	beforeEach(() => {
 		appTree = createTreeWithEmptyWorkspace();

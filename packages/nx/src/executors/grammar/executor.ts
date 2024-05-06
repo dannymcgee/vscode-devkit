@@ -1,4 +1,4 @@
-import { ExecutorContext } from "@nrwl/devkit";
+import { ExecutorContext } from "@nx/devkit";
 import { JsonObject, TMGrammar } from "@vscode-devkit/grammar";
 import * as chalk from "chalk";
 import * as esbuild from "esbuild";
