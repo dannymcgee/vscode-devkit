@@ -78,8 +78,7 @@ function normalizeOptions(tree: Tree, opts: CliOptions): NormalizedOptions {
 	const projectRoot = `${getWorkspaceLayout(tree).libsDir}/${projectDirectory}`;
 	const parsedTags = opts.tags?.split(",").map(s => s.trim()) ?? [];
 
-	const outputPath =
-		opts.outputPath ?? findOutputPath(tree, opts.parentProjectName);
+	const outputPath = opts.outputPath ?? findOutputPath(tree, opts.parentProjectName);
 
 	return {
 		...opts,
@@ -95,7 +94,8 @@ function findOutputPath(tree: Tree, parentProject: string): string {
 	let options: ExtensionBuildOptions | undefined;
 	try {
 		const parentConfig = readProjectConfiguration(tree, parentProject);
-		options = getParentBuildTarget(parentConfig).options;
+		const [, buildTarget] = getParentBuildTarget(parentConfig);
+		options = buildTarget.options;
 	} catch (err) {
 		throw new Error(
 			`${err.message}. You will need to manually specify an "outputPath" for the grammar.`
@@ -104,24 +104,31 @@ function findOutputPath(tree: Tree, parentProject: string): string {
 
 	if (!options)
 		throw new Error(
-			`No options found for ${parentProject}'s "build" target. You will need ` +
+			`No options found for ${parentProject}'s build target. You will need ` +
 				`to manually specify an "outputPath" for the grammar.`
 		);
 
 	return options.outputPath;
 }
 
-function getParentBuildTarget(
-	project: ProjectConfiguration
-): TargetConfiguration<ExtensionBuildOptions> {
+type BuildConfiguration = TargetConfiguration<ExtensionBuildOptions>;
+
+function getParentBuildTarget(project: ProjectConfiguration): [string, BuildConfiguration] {
 	const targets = project.targets;
 	if (!targets)
 		throw new Error(`No targets found for parent project "${project.name}"`);
 
-	if (!("build" in targets))
-		throw new Error(`No "build" target found in ${project.name} targets`);
+	const buildTarget = Object
+		.entries(targets)
+		.find(([_key, target]) => target.executor === "@vscode-devkit/nx:build");
 
-	return targets["build"];
+	if (!buildTarget)
+		throw new Error(
+			`Failed to find target with "@vscode-devkit/nx:build" executor ` +
+				`in ${project.name} targets`
+		);
+
+	return buildTarget;
 }
 
 function addFiles(tree: Tree, opts: NormalizedOptions) {
@@ -141,13 +148,13 @@ function addFiles(tree: Tree, opts: NormalizedOptions) {
 
 function updateFiles(tree: Tree, opts: NormalizedOptions) {
 	const parentConfig = readProjectConfiguration(tree, opts.parentProjectName);
-	const buildTarget = getParentBuildTarget(parentConfig);
+	const [build, buildTarget] = getParentBuildTarget(parentConfig);
 
 	updateProjectConfiguration(tree, opts.parentProjectName, {
 		...parentConfig,
 		targets: {
 			...parentConfig.targets,
-			build: {
+			[build]: {
 				...buildTarget,
 				options: {
 					...(buildTarget.options ?? {}),
