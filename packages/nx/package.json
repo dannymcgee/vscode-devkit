@@ -1,6 +1,6 @@
 {
 	"name": "@vscode-devkit/nx",
-	"version": "0.1.1",
+	"version": "0.1.2",
 	"license": "MIT OR Apache-2.0",
 	"main": "src/index.js",
 	"generators": "./generators.json",
@@ -19,8 +19,8 @@
 		"rimraf": "^3.0.2"
 	},
 	"peerDependencies": {
-		"@nx/devkit": "^16.0.0",
-		"@nx/workspace": "^16.0.0",
+		"@nx/devkit": ">=16.0.0",
+		"@nx/workspace": ">=16.0.0",
 		"@vscode-devkit/grammar": "~0.0.1",
 		"esbuild": "^0.12.15",
 		"tslib": "^2.3.0"
