@@ -1,7 +1,7 @@
 {
 	"root": true,
 	"ignorePatterns": ["**/*"],
-	"plugins": ["@nx", "prefer-let"],
+	"plugins": ["@nx"],
 	"overrides": [
 		{
 			"files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
@@ -26,7 +26,6 @@
 			"extends": ["plugin:@nx/typescript"],
 			"rules": {
 				"prefer-const": "off",
-				"prefer-let/prefer-let": "warn",
 				"@typescript-eslint/no-non-null-assertion": "off"
 			}
 		},
@@ -34,8 +33,7 @@
 			"files": ["*.js", "*.jsx"],
 			"extends": ["plugin:@nx/javascript"],
 			"rules": {
-				"prefer-const": "off",
-				"prefer-let/prefer-let": "warn"
+				"prefer-const": "off"
 			}
 		}
 	]
