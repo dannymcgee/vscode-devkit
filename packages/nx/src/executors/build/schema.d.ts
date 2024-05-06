@@ -1,4 +1,4 @@
-import { AssetGlob } from "@nx/workspace/src/utilities/assets";
+import { AssetGlob } from "@nx/js/src/utils/assets/assets";
 
 export default interface Options {
 	assets?: (string|AssetGlob)[];
