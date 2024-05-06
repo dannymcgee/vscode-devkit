@@ -2,11 +2,15 @@ import { createTreeWithEmptyWorkspace } from "@nx/devkit/testing";
 import { Tree, readProjectConfiguration } from "@nx/devkit";
 
 import generator from "./generator";
-import { GrammarGeneratorSchema } from "./schema";
+import GrammarGeneratorSchema from "./schema";
 
 describe("grammar generator", () => {
 	let appTree: Tree;
-	const options: GrammarGeneratorSchema = { name: "test" };
+	const options: GrammarGeneratorSchema = {
+		id: "foo",
+		scopeName: "source.foo",
+		parentProjectName: "vscode-foo",
+	};
 
 	beforeEach(() => {
 		appTree = createTreeWithEmptyWorkspace();
