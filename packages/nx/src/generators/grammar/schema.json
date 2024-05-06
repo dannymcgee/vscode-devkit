@@ -1,52 +1,48 @@
 {
-  "$schema": "http://json-schema.org/schema",
-  "$id": "Grammar",
-  "title": "",
-  "type": "object",
-  "properties": {
-    "id": {
-      "type": "string",
-      "description": "Language ID. Generally (but not always) this matches the file extension of source files written in the language.",
-      "$default": {
-        "$source": "argv",
-        "index": 0
-      },
-      "x-prompt": "Language ID (short, usually matches the file extension)"
-    },
-    "scopeName": {
-      "type": "string",
-      "description": "The grammar scope that serves as an entrypoint to the TextMate AST.  Generally (but not always) this is \"source.<id>\"",
-      "$default": {
-        "$source": "argv",
-        "index": 1
-      },
-      "x-prompt": "Entry scope for the grammar (generally \"source.<id>\""
-    },
-    "name": {
-      "type": "string",
-      "description": "Name for the grammar's Nx project. Must be valid for a filename. If not provided, will default to \"<id>-grammar\"."
-    },
-    "parentProjectName": {
-      "type": "string",
-      "description": "The Nx project for the VS Code extension this grammar will belong to."
-    },
-    "outputPath": {
-      "type": "string",
-      "description": "Workspace-relative path to the directory for the generated JSON file. If not provided, will use the same output path as the parent project's `build` target."
-    },
-    "tags": {
-      "type": "string",
-      "description": "Add tags to the project (used for linting)",
-      "alias": "t"
-    },
-    "directory": {
-      "type": "string",
-      "description": "A directory where the project is placed"
-    }
-  },
-  "required": [
-    "id",
-    "scopeName",
-    "parentProjectName"
-  ]
+	"$schema": "http://json-schema.org/schema",
+	"$id": "Grammar",
+	"title": "",
+	"type": "object",
+	"properties": {
+		"id": {
+			"type": "string",
+			"description": "Language ID. Generally (but not always) this matches the file extension of source files written in the language.",
+			"$default": {
+				"$source": "argv",
+				"index": 0
+			},
+			"x-prompt": "Language ID (short, usually matches the file extension)"
+		},
+		"scopeName": {
+			"type": "string",
+			"description": "The grammar scope that serves as an entrypoint to the TextMate AST.  Generally (but not always) this is \"source.<id>\"",
+			"$default": {
+				"$source": "argv",
+				"index": 1
+			},
+			"x-prompt": "Entry scope for the grammar (generally \"source.<id>\""
+		},
+		"name": {
+			"type": "string",
+			"description": "Name for the grammar's Nx project. Must be valid for a filename. If not provided, will default to \"<id>-grammar\"."
+		},
+		"parentProjectName": {
+			"type": "string",
+			"description": "The Nx project for the VS Code extension this grammar will belong to."
+		},
+		"outputPath": {
+			"type": "string",
+			"description": "Workspace-relative path to the directory for the generated JSON file. If not provided, will use the same output path as the parent project's `build` target."
+		},
+		"tags": {
+			"type": "string",
+			"description": "Add tags to the project (used for linting)",
+			"alias": "t"
+		},
+		"directory": {
+			"type": "string",
+			"description": "A directory where the project is placed"
+		}
+	},
+	"required": ["id", "scopeName", "parentProjectName"]
 }

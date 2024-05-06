@@ -1,7 +1,7 @@
 import { AssetGlob } from "@nx/workspace/src/utilities/assets";
 
 export default interface Options {
-	assets?: (string | AssetGlob)[];
+	assets?: (string|AssetGlob)[];
 	additionalTargets?: string[];
 	entryPoint: string;
 	outputPath: string;

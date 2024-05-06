@@ -56,7 +56,7 @@ export default async function (host: Tree, opts: CliOptions) {
 
 function normalizeOptions(
 	host: Tree,
-	{ name, displayName, publisher, ...opts }: CliOptions
+	{ name, displayName, publisher, ...opts }: CliOptions,
 ): NormalizedOptions {
 	const description = opts.description ?? "";
 	const author = opts.author ?? "";

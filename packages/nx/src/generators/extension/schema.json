@@ -1,68 +1,68 @@
 {
-  "$schema": "http://json-schema.org/schema",
-  "id": "Nx",
-  "title": "",
-  "type": "object",
-  "properties": {
-    "name": {
-      "type": "string",
-      "description": "Machine-readable extension name",
-      "$default": {
-        "$source": "argv",
-        "index": 0
-      },
-      "pattern": "[-a-z0-9]+",
-      "x-prompt": "Enter the machine-readable extension name (only lowercase alphanumerics and hyphens allowed):"
-    },
-    "displayName": {
-      "type": "string",
-      "description": "Human-friendly extension name",
-      "$default": {
-        "$source": "argv",
-        "index": 1
-      },
-      "x-prompt": "Enter the display name:"
-    },
-    "description": {
-      "type": "string",
-      "description": "A brief description for the package.json"
-    },
-    "author": {
-      "type": "string",
-      "description": "Author field for the package.json"
-    },
-    "publisher": {
-      "type": "string",
-      "description": "Publisher ID for the Visual Studio Marketplace",
-      "$default": {
-        "$source": "argv",
-        "index": 2
-      },
-      "x-prompt": "Enter the VS Marketplace Publisher ID:"
-    },
-    "license": {
-      "type": "string",
-      "description": "License ID for the package.json",
-      "$default": "MIT"
-    },
-    "gitUrl": {
-      "type": "string",
-      "description": "URL for the Git repository"
-    },
-    "tags": {
-      "type": "string",
-      "description": "Add tags to the project (used for linting)",
-      "alias": "t"
-    },
-    "directory": {
-      "type": "string",
-      "description": "A directory where the project is placed",
-      "alias": "d"
-    }
-  },
-  "required": [
-    "name",
-    "displayName",
-    "publisher"
-  ]
+	"$schema": "http://json-schema.org/schema",
+	"id": "Nx",
+	"title": "",
+	"type": "object",
+	"properties": {
+		"name": {
+			"type": "string",
+			"description": "Machine-readable extension name",
+			"$default": {
+				"$source": "argv",
+				"index": 0
+			},
+			"pattern": "[-a-z0-9]+",
+			"x-prompt": "Enter the machine-readable extension name (only lowercase alphanumerics and hyphens allowed):"
+		},
+		"displayName": {
+			"type": "string",
+			"description": "Human-friendly extension name",
+			"$default": {
+				"$source": "argv",
+				"index": 1
+			},
+			"x-prompt": "Enter the display name:"
+		},
+		"description": {
+			"type": "string",
+			"description": "A brief description for the package.json"
+		},
+		"author": {
+			"type": "string",
+			"description": "Author field for the package.json"
+		},
+		"publisher": {
+			"type": "string",
+			"description": "Publisher ID for the Visual Studio Marketplace",
+			"$default": {
+				"$source": "argv",
+				"index": 2
+			},
+			"x-prompt": "Enter the VS Marketplace Publisher ID:"
+		},
+		"license": {
+			"type": "string",
+			"description": "License ID for the package.json",
+			"$default": "MIT"
+		},
+		"gitUrl": {
+			"type": "string",
+			"description": "URL for the Git repository"
+		},
+		"tags": {
+			"type": "string",
+			"description": "Add tags to the project (used for linting)",
+			"alias": "t"
+		},
+		"directory": {
+			"type": "string",
+			"description": "A directory where the project is placed",
+			"alias": "d"
+		}
+	},
+	"required": [
+		"name",
+		"displayName",
+		"publisher"
+	]
 }
