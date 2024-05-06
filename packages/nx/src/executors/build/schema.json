@@ -1,62 +1,79 @@
 {
-	"$schema": "http://json-schema.org/schema",
-	"cli": "nx",
-	"title": "Grammar executor",
-	"description": "",
-	"type": "object",
-	"properties": {
-		"assets": {
-			"type": "array",
-			"items": {
-				"oneOf": [
-					{
-						"type": "string"
-					},
-					{
-						"type": "object",
-						"properties": {
-							"input": { "type": "string" },
-							"output": { "type": "string" },
-							"glob": { "type": "string" },
-							"ignore": {
-								"type": "array",
-								"items": { "type": "string" }
-							},
-							"dot": { "type": "boolean" }
-						},
-						"required": ["input", "output", "glob"]
-					}
-				]
-			},
-			"description": "File paths to be copied from the project root to the output path."
-		},
-		"additionalTargets": {
-			"type": "array",
-			"items": {
-				"type": "string"
-			},
-			"description": "Additional targets to run after the build is completed."
-		},
-		"entryPoint": {
-			"type": "string",
-			"description": "The entry-point for the `esbuild` bundler."
-		},
-		"outputPath": {
-			"type": "string",
-			"description": "Destination folder for the build output."
-		},
-		"outputFile": {
-			"type": "string",
-			"description": "Path to the bundled output file, relative to `outputPath`. This should match the `main` field of your `package.json`."
-		},
-		"package": {
-			"type": "boolean",
-			"description": "Package the extension with `vsce` after building."
-		},
-		"install": {
-			"type": "boolean",
-			"description": "Install the local `.vsix` file after building. Implies `package=true`."
-		}
-	},
-	"required": ["entryPoint", "outputPath", "outputFile"]
+  "$schema": "http://json-schema.org/schema",
+  "title": "Grammar executor",
+  "description": "",
+  "type": "object",
+  "properties": {
+    "assets": {
+      "type": "array",
+      "items": {
+        "oneOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "input": {
+                "type": "string"
+              },
+              "output": {
+                "type": "string"
+              },
+              "glob": {
+                "type": "string"
+              },
+              "ignore": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "dot": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "input",
+              "output",
+              "glob"
+            ]
+          }
+        ]
+      },
+      "description": "File paths to be copied from the project root to the output path."
+    },
+    "additionalTargets": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Additional targets to run after the build is completed."
+    },
+    "entryPoint": {
+      "type": "string",
+      "description": "The entry-point for the `esbuild` bundler."
+    },
+    "outputPath": {
+      "type": "string",
+      "description": "Destination folder for the build output."
+    },
+    "outputFile": {
+      "type": "string",
+      "description": "Path to the bundled output file, relative to `outputPath`. This should match the `main` field of your `package.json`."
+    },
+    "package": {
+      "type": "boolean",
+      "description": "Package the extension with `vsce` after building."
+    },
+    "install": {
+      "type": "boolean",
+      "description": "Install the local `.vsix` file after building. Implies `package=true`."
+    }
+  },
+  "required": [
+    "entryPoint",
+    "outputPath",
+    "outputFile"
+  ]
 }
