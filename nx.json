@@ -32,5 +32,10 @@
 	},
 	"cli": {
 		"defaultCollection": "@nx/workspace"
+	},
+	"targetDefaults": {
+		"lint": {
+			"inputs": ["default", "{workspaceRoot}/.eslintrc.json"]
+		}
 	}
 }
