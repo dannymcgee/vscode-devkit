@@ -32,7 +32,6 @@
 		"tslib": "^2.3.0"
 	},
 	"devDependencies": {
-		"@nrwl/eslint-plugin-nx": "16.10.0",
 		"@nrwl/jest": "16.10.0",
 		"@nrwl/nx-plugin": "16.10.0",
 		"@swc-node/register": "1.6.8",
@@ -60,6 +59,7 @@
 		"@nx/devkit": "16.10.0",
 		"@nx/workspace": "16.10.0",
 		"@nx/linter": "16.10.0",
-		"@nx/js": "16.10.0"
+		"@nx/js": "16.10.0",
+		"@nx/eslint-plugin": "16.10.0"
 	}
 }
