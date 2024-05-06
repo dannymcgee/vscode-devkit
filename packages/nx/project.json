@@ -7,7 +7,11 @@
 		"lint": {
 			"executor": "@nx/linter:eslint",
 			"options": {
-				"lintFilePatterns": ["packages/nx/**/*.ts"]
+				"lintFilePatterns": [
+					"packages/nx/**/*.ts",
+					"packages/nx/package.json",
+					"packages/nx/project.json"
+				]
 			}
 		},
 		"test": {
@@ -51,8 +55,7 @@
 						"glob": "executors.json",
 						"output": "."
 					}
-				],
-				"updateBuildableProjectDepsInPackageJson": true
+				]
 			}
 		}
 	},

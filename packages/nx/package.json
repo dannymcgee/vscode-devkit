@@ -14,7 +14,13 @@
 		"email": "dannymcgee@gmail.com",
 		"url": "https://github.com/dannymcgee"
 	},
+	"dependencies": {
+		"chalk": "^4.1.1",
+		"rimraf": "^3.0.2"
+	},
 	"peerDependencies": {
+		"@nx/devkit": "^16.0.0",
+		"@nx/workspace": "^16.0.0",
 		"@vscode-devkit/grammar": "~0.0.1",
 		"esbuild": "^0.12.15",
 		"tslib": "^2.3.0"
