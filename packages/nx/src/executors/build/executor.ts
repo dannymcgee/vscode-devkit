@@ -70,7 +70,7 @@ async function bundle(opts: Options) {
 		format: "cjs",
 		minify: opts.production,
 		sourcemap: !opts.production,
-    sourcesContent: false,
+		sourcesContent: false,
 		platform: "node",
 		target: "es2015",
 		external: ["vscode"],
