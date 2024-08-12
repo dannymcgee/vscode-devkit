@@ -68,6 +68,8 @@ async function bundle(opts: Options) {
 		entryPoints: [opts.entryPoint],
 		bundle: true,
 		format: "cjs",
+		minify: opts.production,
+		sourcemap: !opts.production,
 		platform: "node",
 		target: "es2015",
 		external: ["vscode"],

@@ -8,4 +8,5 @@ export default interface Options {
 	outputFile: string;
 	package?: boolean;
 	install?: boolean;
+  production?: boolean;
 }
