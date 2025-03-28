@@ -44,6 +44,17 @@ export default async function (host: Tree, opts: CliOptions) {
 					package: false,
 					install: false,
 				},
+				configurations: {
+					production: {
+						package: true,
+						minify: true,
+						sourceMaps: false,
+					},
+					development: {
+						minify: false,
+						sourceMaps: true,
+					},
+				},
 			},
 		},
 		tags: options.parsedTags,

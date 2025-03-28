@@ -55,6 +55,14 @@
 		"install": {
 			"type": "boolean",
 			"description": "Install the local `.vsix` file after building. Implies `package=true`."
+		},
+		"minify": {
+			"type": "boolean",
+			"description": "Minify the bundled output."
+		},
+		"sourceMaps": {
+			"type": "boolean",
+			"description": "Generate source-maps for debugging."
 		}
 	},
 	"required": ["entryPoint", "outputPath", "outputFile"]
